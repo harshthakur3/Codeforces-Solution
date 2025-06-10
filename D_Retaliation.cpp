@@ -1,65 +1,45 @@
 #include <bits/stdc++.h>
 using namespace std;
+
 using ll = long long;
+using ld = long double;
+#define INF(t) numeric_limits<t>::max()
 
-#define yes   cout << "YES\n"
-#define no    cout << "NO\n"
+int main() {
+	ios_base::sync_with_stdio(false); cin.tie(0);
 
-int main(){
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
+	int tc; cin >> tc;
+	while(tc--) {
+		ll n; cin >> n;
+		vector<ll> a(n);
+		for(auto &x : a) cin >> x;
 
-    int T;
-    cin >> T;
-    while(T--){
-        int n;
-        cin >> n;
-        vector<ll> arr(n+1);
-        for(int idx = 1; idx <= n; idx++){
-            cin >> arr[idx];
-        }
+		if(2*a[0] - a[1] < 0 || (2*a[0] - a[1]) % (n+1) != 0) {
+			cout << "NO\n";
+			continue;
+		}
 
-        // 1) Check arithmetic progression
-        bool valid = true;
-        ll delta = arr[2] - arr[1];
-        if(n < 2) valid = false;
-        if(valid){
-            for(int idx = 3; idx <= n; idx++){
-                if(arr[idx] - arr[idx-1] != delta){
-                    valid = false;
-                    break;
-                }
-            }
-        }
+		ll x2 = (2*a[0] - a[1]) / (n+1);
+		ll x1 = a[0] - n*x2;
 
-        if(valid){
-            // 2) Solve for operation counts
-            ll target = arr[1] - delta;
-            ll denominator = n + 1;
-            if(target >= 0 && target % denominator == 0){
-                ll cntB = target / denominator;    // number of type-2 ops
-                ll cntA = cntB + delta;          // number of type-1 ops
-                if(cntA >= 0){
-                    // 3) Verify reconstruction
-                    bool reconstructed = true;
-                    for(int idx = 1; idx <= n; idx++){
-                        ll expected = cntA * idx + cntB * (n - idx + 1);
-                        if(arr[idx] != expected){
-                            reconstructed = false;
-                            break;
-                        }
-                    }
-                    if(reconstructed) yes;
-                    else             no;
-                } else {
-                    no;
-                }
-            } else {
-                no;
-            }
-        } else {
-            no;
-        }
-    }
-    return 0;
+		if(x1 < 0) {
+			cout << "NO\n";
+			continue;
+		}
+
+		bool pos = true;
+
+		for(ll i = 1; i <= n; i++) {
+			if(a[i-1] - i*x1 - (n-i+1)*x2 != 0) pos = false;
+		}
+
+		if(pos) {
+			cout << "YES\n";
+		}
+		else {
+			cout << "NO\n";
+		}
+	}
+
+	return 0;
 }
