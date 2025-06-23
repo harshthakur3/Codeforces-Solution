@@ -14,5 +14,5 @@ int main(){
     }
     if(mp[k]) cout << "YES" << endl;
     else cout << "NO" << endl;
-}
+    }
 }
