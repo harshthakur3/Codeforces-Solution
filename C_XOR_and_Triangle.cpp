@@ -8,19 +8,16 @@ int32_t main(){
     int t;
     cin >> t;
     while(t--){
-        int X;
-        cin >> X;
-        bool found = false;
-        for(int a = X - 1; a >= 1; a--){
-            int y = X ^ a;
-            if((a + X > y) && (a + y > X) && (X + y > a)){
-                cout << a << "\n";
-                found = true;
-                break;
-            }
-        }
-        if(!found)
-            cout << -1 << "\n";
-    }
-    return 0;
+    int n;
+    cin >> n;
+ 
+    int x = 1 << (int)log2(n); // Equivalent to finding the highest power of 2 ≤ n
+    int i = x - 1;
+    int side = n ^ i;
+ 
+    if (n + i > side && n + side > i && i + side > n) {
+        cout << i << endl;
+    } else {
+        cout << -1 << endl;
+    }}
 }

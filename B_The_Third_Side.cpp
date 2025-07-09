@@ -16,7 +16,6 @@ int main(){
             cin >> x;
             sum += x;
         }
-        // We perform (n-1) merges, each reducing the sum by 1
         long long answer = sum - (n - 1);
         cout << answer << "\n";
     }
