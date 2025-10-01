@@ -1,74 +1,75 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define int long long
 
-int dx[] = {-1, 0, 1, 0};
-int dy[] = {0, -1, 0, 1};
-char dir[] = {'U', 'L', 'D', 'R'}; 
+int dr[] = {-1, 0, 1, 0};
+int dc[] = {0, -1, 0, 1};
 
-int main() {
-    // ios::sync_with_stdio(false);
-    // cin.tie(nullptr);
-
+signed main(){
     int n, m;
     cin >> n >> m;
-    vector<string> a(n);
-    for (int i = 0; i < n; i++) cin >> a[i];
-
-    vector<vector<pair<int, int>>> par(n, vector<pair<int, int>>(m, {-1, -1}));
-    vector<vector<int>> vis(n, vector<int>(m, 0));
-    pair<int, int> start, end;
-
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < m; j++) {
-            if (a[i][j] == 'A') start = {i, j};
-            if (a[i][j] == 'B') end = {i, j};
-        }
+    vector<string> v(n);
+    for(int i = 0; i < n; i++){
+        cin >> v[i];
     }
 
+    vector<vector<pair<int,int>>> par(n, vector<pair<int, int>>(m, {-1, -1}));
+    vector<vector<int>> vis(n, vector<int> (m, 0));
+    pair<int, int> start, end;
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < m; j++){
+            if(v[i][j] == 'A')start = {i, j};
+            if(v[i][j] == 'B')end = {i, j};
+        }
+    }
     queue<pair<int, int>> q;
     q.push(start);
     vis[start.first][start.second] = 1;
-
-    while (!q.empty()) {
-        int x = q.front().first;
-        int y = q.front().second;
+    while(!q.empty()){
+        int r = q.front().first;
+        int c = q.front().second;
         q.pop();
-        for (int i = 0; i < 4; i++) {
-            int nx = x + dx[i];
-            int ny = y + dy[i];
-            if (nx >= 0 && nx < n && ny >= 0 && ny < m) {
-                if (a[nx][ny] != '#' && !vis[nx][ny]) {
-                    q.push({nx, ny});
-                    vis[nx][ny] = 1;
-                    par[nx][ny] = {x, y};
+        for(int i = 0; i < 4; i++){
+            int nr = r + dr[i];
+            int nc = c + dc[i];
+            if(nr >= 0 && nr < n && nc >= 0 && nc < m){
+                if(vis[nr][nc] == 0 && v[nr][nc] != '#'){
+                    q.push({nr, nc});
+                    par[nr][nc] = {r, c};
+                    vis[nr][nc] = 1;
                 }
             }
         }
+
     }
 
-    if (!vis[end.first][end.second]) {
-        cout << "NO\n";
-    } else {
-        cout << "YES\n";
+    if(vis[end.first][end.second] == 0){
+        cout << "NO" << endl;
+    }
+    else{
+        // Reconstruct path
+        string path;
+        pair<int,int> cur = end;
+        while(cur != start){
+            pair<int,int> p = par[cur.first][cur.second];
+            int pr = p.first, pc = p.second;
+            int cr = cur.first, cc = cur.second;
 
-        
-        vector<char> path;
-        pair<int, int> cur = end;
-        while (cur != start) {
-            pair<int, int> p = par[cur.first][cur.second];
-            
-            for (int i = 0; i < 4; i++) {
-                if (p.first + dx[i] == cur.first && p.second + dy[i] == cur.second) {
-                    path.push_back(dir[i]);
-                }
+            // Determine move from parent -> cur
+            if(pr == cr - 1 && pc == cc) path.push_back('D'); // parent above -> moved down
+            else if(pr == cr + 1 && pc == cc) path.push_back('U'); // parent below -> moved up
+            else if(pr == cr && pc == cc - 1) path.push_back('R'); // parent left -> moved right
+            else if(pr == cr && pc == cc + 1) path.push_back('L'); // parent right -> moved left
+            else {
+                // should not happen
             }
             cur = p;
         }
-
         reverse(path.begin(), path.end());
+
+        cout << "YES\n";
         cout << path.size() << "\n";
-        for (char c : path) cout << c;
-        cout << "\n";
-    }
-    return 0;
+        cout << path << "\n";
+        }
+    
 }
