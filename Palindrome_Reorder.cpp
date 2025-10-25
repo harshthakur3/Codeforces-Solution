@@ -1,38 +1,64 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+// #define int long long
 
-int main() {
+int main(){
     string s;
     cin >> s;
-    map<char, int> freq;
-    for (char c : s) {
-        freq[c]++;
+    unordered_map<char, int>mp;
+    int n = s.size();
+    for(int i = 0; i < n; i++){
+        mp[s[i]]++;
     }
     int odd_count = 0;
-    char odd_char = '\0';
-    for (auto &it : freq) {
-        if (it.second % 2 != 0) {
+    for(auto it : mp){
+        if(it.second%2 == 1){
             odd_count++;
-            odd_char = it.first;
         }
     }
-    if (odd_count > 1) {
-        cout << "NO SOLUTION" << endl;
-        return 0;
+    if(odd_count > 1){
+        cout << "NO SOLUTION";
     }
-    string first_half = "", middle = "";
-    for (auto &it : freq) {
-        int half = it.second / 2;
-        while (half--) {
-            first_half += it.first;
+    else if(odd_count == 0){
+        vector<char> v;
+        for(auto it : mp){
+            int temp = it.second/2;
+            while(temp--){
+                v.push_back(it.first);
+            }
         }
-        if (it.second % 2 != 0) {
-            middle = it.first;
+        for(int i = 0; i < v.size(); i++){
+            cout << v[i];
+        }
+        reverse(v.begin(), v.end());
+        for(int i = 0; i < v.size(); i++){
+            cout << v[i];
+        }
+        
+    }
+    else{
+        char hola;
+        for(auto it : mp){
+            if(it.second%2 == 1){
+                it.second--;
+                hola = it.first;
+                break;
+            }
+        }
+        vector<char> v;
+        for(auto it : mp){
+            int temp = it.second/2;
+            while(temp--){
+                v.push_back(it.first);
+            }
+        }
+        for(int i = 0; i < v.size(); i++){
+            cout << v[i];
+        }
+        cout << hola;
+        reverse(v.begin(), v.end());
+        for(int i = 0; i < v.size(); i++){
+            cout << v[i];
         }
     }
-    string second_half = first_half;
-    reverse(second_half.begin(), second_half.end());
-    cout << first_half + middle + second_half << endl;
-
-    return 0;
 }

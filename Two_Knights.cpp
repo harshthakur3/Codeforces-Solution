@@ -1,20 +1,14 @@
 #include <iostream>
 using namespace std;
-// Function to calculate and print the number of ways two
-// knights can be placed on a K X K chessboard such that
-// they do not attack each other
-long calculateWays(int K) {
-    long totalWays = ((long) K * K * (K * K - 1)) / 2;
-    long attackingWays = 4 * (K - 1) * (K - 2);
-    long ans = totalWays - attackingWays;
-    return ans;
-}
-int main() {
+#define int long long
+// pehle ye dekho total ways kya hai knight ko position krne ke chess board me
+// fir ye socho in a given chess board kitne condition bante jab knight ek dusre ko attack krta
+signed main() {
     int N;
     cin >> N;
     for (int K = 1; K <= N; K++) {
-        cout << calculateWays(K) << " " << endl;
+        int k = K;
+        cout << k*k*(k*k - 1)/2 - 4*(k - 1)*(k - 2) << endl;
     }
-
     return 0;
 }

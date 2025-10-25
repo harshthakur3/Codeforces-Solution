@@ -13,7 +13,7 @@ int main(){
                 cout << i*i - (j - 1) << endl;
             }
             else{
-                cout << (i - 1)*(i - 1) + 1 + (j - 1) << endl;
+                cout << (i - 1)*(i - 1) + j << endl;
             }
         }
         else{
@@ -21,7 +21,7 @@ int main(){
                 cout << j*j - (i - 1) << endl;
             }
             else{
-                cout << (j - 1)*(j - 1) + 1 + (i - 1) << endl;
+                cout << (j - 1)*(j - 1) + i << endl;
             }
         }
     }
