@@ -20,8 +20,8 @@ int main(){
 					r--;
 				}else{
 					if(s[l]!=a and s[r]!=a){
-						 v[a-'a'+1]=n+1;
-                         break;
+						v[a-'a'+1]=n+1;
+                        break;
 						
 					}else{
 						v[a-'a'+1]++;
